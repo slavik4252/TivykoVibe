@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>вайб. — личный сайт</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a1a;--card:#12122a;--card2:#1a1a35;
+  --pink:#e040fb;--purple:#7c4dff;--cyan:#00e5ff;
+  --text:#f0f0ff;--muted:#9090b0;--border:#2a2a4a;
+  --grad:linear-gradient(135deg,var(--pink),var(--purple))
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;overflow-x:hidden}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#0a0a1a}
+::-webkit-scrollbar-thumb{background:var(--purple);border-radius:2px}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,26,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 20px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px;height:56px;flex-wrap:wrap}
+.nav-logo{font-size:1.25rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
+.nav-badge{font-size:.65rem;background:rgba(224,64,251,.15);border:1px solid rgba(224,64,251,.4);color:var(--pink);padding:2px 8px;border-radius:20px;white-space:nowrap}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.78rem;padding:4px 8px;border-radius:6px;transition:.2s}
+.nav-links a:hover{color:var(--text);background:rgba(124,77,255,.2)}
+.nav-tg{background:var(--grad);color:#fff;border:none;padding:6px 14px;border-radius:20px;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;text-decoration:none}
+
+/* ── SECTIONS ── */
+section{padding:80px 20px;max-width:1100px;margin:0 auto}
+.section-label{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--pink);margin-bottom:8px}
+h2{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;margin-bottom:8px}
+.section-sub{color:var(--muted);font-size:1rem;margin-bottom:36px;max-width:560px}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:24px;font-size:.88rem;font-weight:700;cursor:pointer;border:none;text-decoration:none;transition:.2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);opacity:.9}
+.btn-primary{background:var(--grad);color:#fff}
+.btn-outline{background:transparent;border:1.5px solid var(--purple);color:var(--text)}
+.btn-ghost{background:rgba(255,255,255,.06);color:var(--text)}
+.btn-sm{padding:7px 16px;font-size:.78rem}
+.btn-disabled{background:rgba(255,255,255,.05);color:var(--muted);border:1px dashed var(--border);cursor:not-allowed;pointer-events:none}
+.btn-group{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+
+/* ── HERO ── */
+#hero{padding-top:120px;padding-bottom:80px;text-align:center}
+.hero-tag{display:inline-block;background:rgba(224,64,251,.12);border:1px solid rgba(224,64,251,.35);color:var(--pink);font-size:.75rem;padding:4px 14px;border-radius:20px;margin-bottom:18px}
+#hero h1{font-size:clamp(2.2rem,7vw,4.2rem);font-weight:900;line-height:1.12;margin-bottom:18px}
+#hero h1 span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{color:var(--muted);font-size:1.05rem;max-width:540px;margin:0 auto 32px}
+.hero-stats{display:flex;justify-content:center;flex-wrap:wrap;gap:24px;margin-top:44px}
+.stat{text-align:center}
+.stat-num{font-size:1.9rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:.72rem;color:var(--muted)}
+
+/* ── GRID CARDS ── */
+.grid{display:grid;gap:18px}
+.grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;transition:.25s}
+.card:hover{border-color:var(--purple);transform:translateY(-3px)}
+.card-icon{font-size:1.8rem;margin-bottom:10px}
+.card h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+.card p{font-size:.85rem;color:var(--muted);line-height:1.55}
+
+/* ── STORY ── */
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:700px){.story-grid{grid-template-columns:1fr}}
+.story-text p{color:var(--muted);font-size:.95rem;margin-bottom:14px;line-height:1.7}
+.story-text strong{color:var(--text)}
+.quote-block{background:var(--card2);border-left:3px solid var(--pink);border-radius:0 12px 12px 0;padding:18px 20px;margin:20px 0}
+.quote-block p{font-size:.92rem;color:var(--text);font-style:italic}
+.quote-block span{font-size:.75rem;color:var(--muted);display:block;margin-top:6px}
+.terminal{background:#0d0d1f;border:1px solid var(--border);border-radius:12px;padding:16px 18px;font-family:'Courier New',monospace;font-size:.78rem}
+.terminal .t-bar{display:flex;gap:6px;margin-bottom:12px}
+.terminal .t-bar span{width:10px;height:10px;border-radius:50%;display:inline-block}
+.t-red{background:#ff5f57}.t-yellow{background:#febc2e}.t-green{background:#28c840}
+.terminal .t-line{color:#9090b0;margin-bottom:4px}
+.terminal .t-line .hi{color:var(--cyan)}
+.terminal .t-line .ok{color:#28c840}
+.terminal .t-line .warn{color:#febc2e}
+
+/* ── FACTS ── */
+.fact-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center;transition:.25s}
+.fact-card:hover{border-color:var(--cyan);transform:translateY(-3px)}
+.fact-num{font-size:2.2rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.fact-label{font-size:.85rem;color:var(--muted);margin-top:4px}
+
+/* ── PORTFOLIO ── */
+.work-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.work-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:.25s}
+.work-card:hover{border-color:var(--purple);transform:translateY(-3px)}
+.work-preview{height:140px;background:linear-gradient(135deg,#1a1a35,#12122a);display:flex;align-items:center;justify-content:center;font-size:2.6rem;position:relative}
+.work-preview.soon{opacity:.5}
+.work-preview .live-badge{position:absolute;top:10px;right:10px;background:rgba(40,200,64,.18);border:1px solid #28c840;color:#28c840;font-size:.62rem;padding:2px 8px;border-radius:20px;font-weight:700}
+.work-body{padding:16px}
+.work-body h3{font-size:.95rem;font-weight:700;margin-bottom:4px}
+.work-body p{font-size:.8rem;color:var(--muted);margin-bottom:10px}
+.work-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.work-tag{font-size:.65rem;background:rgba(124,77,255,.18);border:1px solid rgba(124,77,255,.35);color:var(--purple);padding:2px 8px;border-radius:10px}
+.portfolio-note{background:var(--card2);border:1px dashed var(--border);border-radius:12px;padding:16px 20px;margin-top:22px;font-size:.82rem;color:var(--muted);line-height:1.6}
+.portfolio-note strong{color:var(--pink)}
+
+/* ── MINDSET ── */
+.mindset-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;transition:.25s}
+.mindset-card:hover{border-color:var(--pink);transform:translateY(-3px)}
+.mindset-num{font-size:.72rem;color:var(--pink);font-weight:700;letter-spacing:.08em;margin-bottom:6px}
+.mindset-card h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+.mindset-card p{font-size:.84rem;color:var(--muted);line-height:1.55}
+
+/* ── MONEY ── */
+.price-table-wrap{overflow-x:auto;margin-bottom:28px}
+.price-table{width:100%;border-collapse:collapse;min-width:480px}
+.price-table th{text-align:left;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:10px 14px;border-bottom:1px solid var(--border)}
+.price-table td{padding:14px;border-bottom:1px solid rgba(42,42,74,.6);font-size:.88rem;vertical-align:middle}
+.price-table tr:last-child td{border-bottom:none}
+.price-table tr:hover td{background:rgba(124,77,255,.06)}
+.price-tag{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:800}
+.money-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:28px}
+.money-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:.25s}
+.money-card:hover{border-color:var(--purple);transform:translateY(-3px)}
+.money-card h3{font-size:1rem;font-weight:700}
+.money-card p{font-size:.82rem;color:var(--muted);flex:1;line-height:1.5}
+.money-card .price-pill{display:inline-block;background:rgba(224,64,251,.12);border:1px solid rgba(224,64,251,.3);color:var(--pink);font-size:.78rem;padding:3px 12px;border-radius:20px;font-weight:700}
+.cta-banner{background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:32px 28px;text-align:center;margin-top:36px}
+.cta-banner h3{font-size:1.5rem;font-weight:900;margin-bottom:8px}
+.cta-banner p{color:var(--muted);font-size:.92rem;margin-bottom:20px}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;text-align:center;transition:.25s}
+.contact-card:hover{border-color:var(--pink);transform:translateY(-3px)}
+.contact-card .c-icon{font-size:2rem;margin-bottom:10px}
+.contact-card h3{font-size:.95rem;font-weight:700;margin-bottom:4px}
+.contact-card p{font-size:.8rem;color:var(--muted);margin-bottom:14px}
+
+/* ── FOOTER ── */
+footer{background:var(--card);border-top:1px solid var(--border);padding:32px 20px;text-align:center}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-logo{font-size:1.4rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:16px 0}
+footer p{font-size:.78rem;color:var(--muted);margin-top:12px}
+
+/* ── FLOAT BUTTON ── */
+.tg-float{position:fixed;bottom:22px;right:18px;z-index:200;background:var(--grad);color:#fff;border:none;padding:12px 20px;border-radius:28px;font-size:.88rem;font-weight:800;cursor:pointer;text-decoration:none;box-shadow:0 4px 20px rgba(224,64,251,.4);transition:.2s}
+.tg-float:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(224,64,251,.55)}
+
+/* ── FADE ANIMATION ── */
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .55s ease,transform .55s ease}
+.fade-up.visible{opacity:1;transform:none}
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  section{padding:60px 16px}
+  .nav-links{display:none}
+  #hero{padding-top:90px}
+  .story-grid{grid-template-columns:1fr}
+  .btn{padding:9px 16px;font-size:.82rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     NAV
+══════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">вайб.</span>
+    <span class="nav-badge">🔥 16 лет · начинающий</span>
+    <div class="nav-links">
+      <a href="#story">История</a>
+      <a href="#whatis">Что это</a>
+      <a href="#facts">Факты</a>
+      <a href="#portfolio">Примеры</a>
+      <a href="#mindset">Мышление</a>
+      <a href="#money">Прайс</a>
+      <a href="#contact">Связь</a>
+    </div>
+    <a class="nav-tg btn" href="https://t.me/plsfea" target="_blank">✈️ @plsfea</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-tag">🚀 начинающий вайб-кодер · 16 лет</div>
+  <h1>Я начал кодить<br/>через <span>вайб.</span> 🤯</h1>
+  <p class="hero-desc">
+    Без опыта, без курсов — только ИИ и идеи.<br/>
+    Пишу сайты, боты и сервисы голосом и текстом.<br/>
+    <strong style="color:var(--pink)">@plsfea · tivyko@gmail.com</strong>
+  </p>
+  <div class="btn-group" style="justify-content:center">
+    <a class="btn btn-primary" href="https://t.me/plsfea" target="_blank">✈️ @plsfea</a>
+    <a class="btn btn-outline" href="mailto:tivyko@gmail.com?subject=Заказ%20сайта">📧 Почта</a>
+    <a class="btn btn-ghost" href="#portfolio">💼 Примеры</a>
+    <a class="btn btn-ghost" href="#money">💰 Прайс</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">70%</div><div class="stat-label">кода пишет ИИ</div></div>
+    <div class="stat"><div class="stat-num">10x</div><div class="stat-label">быстрее обычного</div></div>
+    <div class="stat"><div class="stat-num">0₽</div><div class="stat-label">потрачено на курсы</div></div>
+    <div class="stat"><div class="stat-num">16</div><div class="stat-label">лет · уже зарабатываю</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     STORY
+══════════════════════════════════ -->
+<section id="story">
+  <div class="fade-up">
+    <p class="section-label">📖 моя история</p>
+    <h2>Как всё началось</h2>
+    <p class="section-sub">14 дней от «что такое HTML» до первого заработка</p>
+  </div>
+  <div class="story-grid fade-up">
+    <div class="story-text">
+      <p>Мне <strong>16 лет</strong>, и я никогда не учил программирование по учебникам. Я просто начал <strong>разговаривать с ИИ</strong> как с разработчиком — и он писал код за меня.</p>
+      <p>Первый сайт я сделал за <strong>2 часа</strong>. Не понимая ни строчки кода. Просто описывал что хочу — и получал результат.</p>
+      <p>Это называется <strong>вайб-кодинг</strong>. И это меняет всё для тех, кто хочет создавать продукты, но не хочет годами учить синтаксис.</p>
+      <div class="quote-block">
+        <p>«Я просто вайб-кожу, полностью отдаваясь потоку. Я даже не читаю код.»</p>
+        <span>— Андрей Карпатый, сооснователь OpenAI · февраль 2025</span>
+      </div>
+    </div>
+    <div>
+      <div class="terminal">
+        <div class="t-bar"><span class="t-red"></span><span class="t-yellow"></span><span class="t-green"></span></div>
+        <div class="t-line">День 1 → <span class="hi">«сделай мне лендинг»</span></div>
+        <div class="t-line">День 2 → <span class="ok">первый рабочий сайт ✓</span></div>
+        <div class="t-line">День 4 → <span class="hi">добавил анимации</span></div>
+        <div class="t-line">День 6 → <span class="ok">телеграм-бот запущен ✓</span></div>
+        <div class="t-line">День 9 → <span class="warn">выложил в интернет</span></div>
+        <div class="t-line">День 11 → <span class="hi">первый клиент написал</span></div>
+        <div class="t-line">День 14 → <span class="ok">первые деньги 💸 ✓</span></div>
+      </div>
+      <div class="btn-group" style="margin-top:20px">
+        <a class="btn btn-primary btn-sm" href="https://t.me/plsfea" target="_blank">✈️ @plsfea</a>
+        <a class="btn btn-outline btn-sm" href="mailto:tivyko@gmail.com?subject=Вопрос">📧 Почта</a>
+        <a class="btn btn-ghost btn-sm" href="#portfolio">💼 Примеры</a>
+        <a class="btn btn-ghost btn-sm" href="#money">💰 Прайс</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     WHAT IS VIBE-CODING
+══════════════════════════════════ -->
+<section id="whatis">
+  <div class="fade-up">
+    <p class="section-label">💡 объяснение</p>
+    <h2>Что такое вайб-кодинг?</h2>
+    <p class="section-sub">Новый способ создавать продукты — без знания синтаксиса</p>
+  </div>
+  <div class="grid grid-2 fade-up">
+    <div class="card">
+      <div class="card-icon">💬</div>
+      <h3>1. Говоришь</h3>
+      <p>Описываешь ИИ что хочешь — на русском, простыми словами. «Сделай сайт для кофейни с меню и кнопкой заказа».</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <h3>2. Кодит</h3>
+      <p>ИИ пишет весь код: HTML, CSS, JavaScript, Python — что нужно. Ты получаешь готовый файл за секунды.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">👀</div>
+      <h3>3. Смотришь</h3>
+      <p>Открываешь результат в браузере. Видишь что работает, а что нет. Не нравится — говоришь ИИ что поменять.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <h3>4. Итерируешь</h3>
+      <p>«Сделай кнопку розовой», «добавь анимацию», «убери этот блок» — каждый раз получаешь новую версию.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚀</div>
+      <h3>5. Запускаешь</h3>
+      <p>Выкладываешь на netlify.com/drop или bolt.new одним кликом. Получаешь ссылку и показываешь клиенту.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">💰</div>
+      <h3>6. Зарабатываешь</h3>
+      <p>Клиент платит за результат, а не за то сколько часов ты провёл за компьютером. Результат — уже готов.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FACTS
+══════════════════════════════════ -->
+<section id="facts">
+  <div class="fade-up">
+    <p class="section-label">📊 факты</p>
+    <h2>Цифры, которые удивляют</h2>
+    <p class="section-sub">Почему вайб-кодинг — это не просто тренд</p>
+  </div>
+  <div class="grid grid-3 fade-up">
+    <div class="fact-card">
+      <div class="fact-num">2025</div>
+      <div class="fact-label">год когда это стало мейнстримом — Андрей Карпатый придумал термин в феврале</div>
+    </div>
+    <div class="fact-card">
+      <div class="fact-num">70%</div>
+      <div class="fact-label">кода в стартапах уже пишет ИИ — данные GitHub Copilot 2025</div>
+    </div>
+    <div class="fact-card">
+      <div class="fact-num">10x</div>
+      <div class="fact-label">быстрее создаётся MVP с ИИ по сравнению с классическим кодингом</div>
+    </div>
+    <div class="fact-card">
+      <div class="fact-num">16</div>
+      <div class="fact-label">лет — мой возраст. Уже зарабатываю фрилансом без диплома и опыта</div>
+    </div>
+    <div class="fact-card">
+      <div class="fact-num">0₽</div>
+      <div class="fact-label">потрачено на курсы. Всему научил ИИ бесплатно — ChatGPT, Claude, Gemini</div>
+    </div>
+    <div class="fact-card">
+      <div class="fact-num">∞</div>
+      <div class="fact-label">возможностей для тех кто начинает сейчас — рынок только формируется</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PORTFOLIO
+══════════════════════════════════ -->
+<section id="portfolio">
+  <div class="fade-up">
+    <p class="section-label">💼 примеры работ</p>
+    <h2>Что я уже сделал</h2>
+    <p class="section-sub">Реальные проекты — от идеи до рабочей ссылки</p>
+  </div>
+  <div class="work-grid fade-up">
+
+    <!-- Карточка 1 — этот сайт -->
+    <div class="work-card">
+      <div class="work-preview">🌐<span class="live-badge">LIVE</span></div>
+      <div class="work-body">
+        <h3>Этот сайт · лендинг</h3>
+        <p>Личный сайт вайб-кодера. Анимации, адаптив, одним файлом — без фреймворков.</p>
+        <div class="work-tags">
+          <span class="work-tag">HTML</span>
+          <span class="work-tag">CSS</span>
+          <span class="work-tag">JS</span>
+          <span class="work-tag">вайб-кодинг</span>
+        </div>
+        <a class="btn btn-primary btn-sm" href="#hero">👆 Вот он</a>
+      </div>
+    </div>
+
+    <!-- Карточка 2 — скоро -->
+<div class="work-card">
+  <div class="work-preview">☕<span class="live-badge">LIVE</span></div>
+  <div class="work-body">
+    <h3>BREW · лендинг кофейни</h3>
+    <p>Сайт для кофейни — меню, акции, адрес, анимации. Сделан через вайб-кодинг за пару часов.</p>
+    <div class="work-tags">
+      <span class="work-tag">HTML</span>
+      <span class="work-tag">CSS</span>
+      <span class="work-tag">JS</span>
+      <span class="work-tag">анимации</span>
+    </div>
+    <a class="btn btn-primary btn-sm" href="https://slavik4252.github.io/brew-coffee/" target="_blank">🔗 Открыть сайт</a>
+  </div>
+</div>
+
+    <!-- Карточка 3 — скоро -->
+    <div class="work-card">
+      <div class="work-preview soon">🚀</div>
+      <div class="work-body">
+        <h3>Проект 3 · скоро</h3>
+        <p>Ещё один проект на подходе. Обновлю раздел как только будет готово.</p>
+        <div class="work-tags">
+          <span class="work-tag">в процессе</span>
+        </div>
+        <button class="btn btn-disabled btn-sm">Ссылка — позже</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="portfolio-note fade-up">
+    💡 <strong>Хочешь такой же?</strong> Пиши в Telegram <strong>@plsfea</strong> или на почту <strong>tivyko@gmail.com</strong> — обсудим твой проект и цену.
+  </div>
+  <div class="btn-group fade-up">
+    <a class="btn btn-primary" href="https://t.me/plsfea" target="_blank">✈️ Обсудить проект</a>
+    <a class="btn btn-outline" href="mailto:tivyko@gmail.com?subject=Заказ%20сайта">📧 Написать на почту</a>
+    <a class="btn btn-ghost" href="#money">💰 Посмотреть прайс</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     MINDSET
+══════════════════════════════════ -->
+<section id="mindset">
+  <div class="fade-up">
+    <p class="section-label">🧠 мышление</p>
+    <h2>Мышление вайб-кодера</h2>
+    <p class="section-sub">Установки которые реально помогают</p>
+  </div>
+  <div class="grid grid-2 fade-up">
+    <div class="mindset-card">
+      <div class="mindset-num">01</div>
+      <h3>Результат важнее понимания</h3>
+      <p>Не нужно знать как работает каждая строчка. Нужно чтобы продукт работал и решал задачу клиента.</p>
+    </div>
+    <div class="mindset-card">
+      <div class="mindset-num">02</div>
+      <h3>ИИ — это твой разработчик</h3>
+      <p>Думай о себе как о менеджере продукта. Ты ставишь задачу, ИИ её решает. Ты проверяешь результат.</p>
+    </div>
+    <div class="mindset-card">
+      <div class="mindset-num">03</div>
+      <h3>Итерации — это норма</h3>
+      <p>С первого раза никогда не идеально. 5–10 правок — стандарт. Это не ошибка, это процесс.</p>
+    </div>
+    <div class="mindset-card">
+      <div class="mindset-num">04</div>
+      <h3>Запускай раньше</h3>
+      <p>Лучше некрасивый но работающий продукт сегодня, чем идеальный через месяц. Рынок вознаграждает скорость.</p>
+    </div>
+    <div class="mindset-card">
+      <div class="mindset-num">05</div>
+      <h3>Возраст — не ограничение</h3>
+      <p>Клиентам важен результат, а не паспорт. Делай качественно — и никто не спросит сколько тебе лет.</p>
+    </div>
+    <div class="mindset-card">
+      <div class="mindset-num">06</div>
+      <h3>Учись на проектах</h3>
+      <p>Каждый новый заказ учит больше чем любой курс. Реальная задача — лучший учитель.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     MONEY / ПРАЙС
+══════════════════════════════════ -->
+<section id="money">
+  <div class="fade-up">
+    <p class="section-label">💰 прайс и услуги</p>
+    <h2>Что я делаю и сколько стоит</h2>
+    <p class="section-sub">Честные цены для старта — качество как у взрослых</p>
+  </div>
+
+  <div class="price-table-wrap fade-up">
+    <table class="price-table">
+      <thead>
+        <tr>
+          <th>Услуга</th>
+          <th>Цена</th>
+          <th>Срок</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🖥 Лендинг / визитка</td>
+          <td><span class="price-tag">1 500–4 000 ₽</span></td>
+          <td>1–2 ч</td>
+          <td><a class="btn btn-primary btn-sm" href="https://t.me/plsfea" target="_blank">✈️ Заказать</a></td>
+        </tr>
+        <tr>
+          <td>🤖 Telegram-бот</td>
+          <td><span class="price-tag">2 000–6 000 ₽</span></td>
+          <td>2–4 ч</td>
+          <td><a class="btn btn-primary btn-sm" href="https://t.me/plsfea" target="_blank">✈️ Заказать</a></td>
+        </tr>
+        <tr>
+          <td>🏢 Сайт для бизнеса</td>
+          <td><span class="price-tag">3 000–8 000 ₽</span></td>
+          <td>3–6 ч</td>
+          <td><a class="btn btn-primary btn-sm" href="https://t.me/plsfea" target="_blank">✈️ Заказать</a></td>
+        </tr>
+        <tr>
+          <td>🎨 Редизайн</td>
+          <td><span class="price-tag">1 000–3 000 ₽</span></td>
+          <td>30–60 мин</td>
+          <td><a class="btn btn-primary btn-sm" href="https://t.me/plsfea" target="_blank">✈️ Заказать</a></td>
+        </tr>
+        <tr>
+          <td>🔧 Поддержка / мес</td>
+          <td><span class="price-tag">3 000–8 000 ₽</span></td>
+          <td>2–4 ч/мес</td>
+          <td><a class="btn btn-primary btn-sm" href="https://t.me/plsfea" target="_blank">✈️ Заказать</a></td>
+        </tr>
+        <tr>
+          <td>📱 Мини-приложение</td>
+          <td><span class="price-tag">5 000–15 000 ₽</span></td>
+          <td>1–3 дня</td>
+          <td><a class="btn btn-primary btn-sm" href="https://t.me/plsfea" target="_blank">✈️ Заказать</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="money-grid fade-up">
+    <div class="money-card">
+      <div class="card-icon">🖥</div>
+      <h3>Лендинг / визитка</h3>
+      <p>Одностраничный сайт для бизнеса, мероприятия или личного бренда. Адаптив под телефон, анимации, форма обратной связи.</p>
+      <span class="price-pill">1 500–4 000 ₽</span>
+      <a class="btn btn-primary btn-sm" href="https://t.me/plsfea" target="_blank">✈️ Заказать</a>
+    </div>
+    <div class="money-card">
+      <div class="card-icon">🤖</div>
+      <h3>Telegram-бот</h3>
+      <p>Бот для приёма заявок, меню кафе, FAQ, рассылок. Работает 24/7 без твоего участия.</p>
+      <span class="price-pill">2 000–6 000 ₽</span>
+      <a class="btn btn-primary btn-sm" href="https://t.me/plsfea" target="_blank">✈️ Заказать</a>
+    </div>
+    <div class="money-card">
+      <div class="card-icon">🏢</div>
+      <h3>Сайт для бизнеса</h3>
+      <p>Многостраничный сайт с каталогом, формами, картой. Для небольших компаний и ИП.</p>
+      <span class="price-pill">3 000–8 000 ₽</span>
+      <a class="btn btn-primary btn-sm" href="https://t.me/plsfea" target="_blank">✈️ Заказать</a>
+    </div>
+    <div class="money-card">
+      <div class="card-icon">🎨</div>
+      <h3>Редизайн</h3>
+      <p>Обновлю внешний вид существующего сайта — цвета, шрифты, структура блоков. Быстро и без потери данных.</p>
+      <span class="price-pill">1 000–3 000 ₽</span>
+      <a class="btn btn-outline btn-sm" href="mailto:tivyko@gmail.com?subject=Редизайн%20сайта">✉️ Заказать</a>
+    </div>
+    <div class="money-card">
+      <div class="card-icon">🔧</div>
+      <h3>Поддержка / мес</h3>
+      <p>Ежемесячное обслуживание: правки, обновления, мелкие доработки. Удобно для постоянных клиентов.</p>
+      <span class="price-pill">3 000–8 000 ₽</span>
+      <a class="btn btn-outline btn-sm" href="mailto:tivyko@gmail.com?subject=Поддержка%20сайта">✉️ Заказать</a>
+    </div>
+    <div class="money-card">
+      <div class="card-icon">📱</div>
+      <h3>Мини-приложение</h3>
+      <p>Telegram Mini App или простое веб-приложение. Каталог, запись, калькулятор — что нужно бизнесу.</p>
+      <span class="price-pill">5 000–15 000 ₽</span>
+      <a class="btn btn-primary btn-sm" href="https://t.me/plsfea" target="_blank">✈️ Заказать</a>
+    </div>
+  </div>
+
+  <div class="cta-banner fade-up">
+    <h3>Не нашёл своё? 🤔</h3>
+    <p>Напиши — обсудим любую задачу и назову точную цену. Отвечаю быстро.</p>
+    <div class="btn-group" style="justify-content:center">
+      <a class="btn btn-primary" href="https://t.me/plsfea" target="_blank">✈️ Написать в Telegram</a>
+      <a class="btn btn-outline" href="mailto:tivyko@gmail.com?subject=Свой%20проект">📧 Написать на почту</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CONTACT
+══════════════════════════════════ -->
+<section id="contact">
+  <div class="fade-up">
+    <p class="section-label">📬 связь</p>
+    <h2>Написать мне</h2>
+    <p class="section-sub">Отвечаю быстро — обычно в течение часа</p>
+  </div>
+  <div class="contact-grid fade-up">
+    <div class="contact-card">
+      <div class="c-icon">✈️</div>
+      <h3>Telegram</h3>
+      <p>Самый быстрый способ связи. Пиши в любое время.</p>
+      <a class="btn btn-primary btn-sm" href="https://t.me/plsfea" target="_blank">@plsfea</a>
+    </div>
+    <div class="contact-card">
+      <div class="c-icon">📧</div>
+      <h3>Email</h3>
+      <p>Для официальных запросов и подробного ТЗ.</p>
+      <a class="btn btn-outline btn-sm" href="mailto:tivyko@gmail.com?subject=Заказ">tivyko@gmail.com</a>
+    </div>
+    <div class="contact-card">
+      <div class="c-icon">💼</div>
+      <h3>Примеры работ</h3>
+      <p>Посмотри что я уже сделал — прямо на этом сайте.</p>
+      <a class="btn btn-ghost btn-sm" href="#portfolio">Смотреть</a>
+    </div>
+    <div class="contact-card">
+      <div class="c-icon">💰</div>
+      <h3>Прайс</h3>
+      <p>Цены на все услуги — честно и без скрытых платежей.</p>
+      <a class="btn btn-ghost btn-sm" href="#money">Посмотреть</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer>
+  <div class="footer-inner fade-up">
+    <div class="footer-logo">вайб.</div>
+    <p style="color:var(--muted);font-size:.85rem;margin-bottom:12px">Начинающий вайб-кодер · 16 лет · делаю сайты и боты через ИИ</p>
+    <div class="footer-links">
+      <a class="btn btn-primary btn-sm" href="https://t.me/plsfea" target="_blank">✈️ @plsfea</a>
+      <a class="btn btn-outline btn-sm" href="mailto:tivyko@gmail.com?subject=Заказ">📧 Почта</a>
+      <a class="btn btn-ghost btn-sm" href="#portfolio">💼 Примеры</a>
+      <a class="btn btn-ghost btn-sm" href="#money">💰 Прайс</a>
+      <a class="btn btn-ghost btn-sm" href="#story">📖 История</a>
+    </div>
+    <p>вайб. · 2025 · @plsfea · tivyko@gmail.com · 16 лет</p>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════
+     FLOAT BUTTON
+══════════════════════════════════ -->
+<a class="tg-float" href="https://t.me/plsfea" target="_blank">✈️ @plsfea</a>
+
+<!-- ══════════════════════════════════
+     JS
+══════════════════════════════════ -->
+<script>
+// Fade-up on scroll
+var faders = document.querySelectorAll('.fade-up');
+var observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){ e.target.classList.add('visible'); }
+  });
+},{threshold:0.06});
+faders.forEach(function(el){ observer.observe(el); });
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var t = document.querySelector(this.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+  });
+});
+
+// Active nav highlight
+var sections = document.querySelectorAll('section[id]');
+var navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',function(){
+  var y = window.scrollY + 80;
+  sections.forEach(function(s){
+    if(y >= s.offsetTop && y < s.offsetTop + s.offsetHeight){
+      navLinks.forEach(function(l){ l.style.color=''; });
+      var active = document.querySelector('.nav-links a[href="#'+s.id+'"]');
+      if(active) active.style.color='var(--pink)';
+    }
+  });
+});
+</script>
+</body>
+</html>
